@@ -63,24 +63,68 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+# The elements of y in vector form are the corresponding row y in the identity
+# matrix formed by the number of classes
+Y = eye(num_labels)(y,:); #5000x10
+
+
+#///////////////// Part 1 - Feedforward and cost function ////////////////
+# computes prediction for all x given theta parameters
+a1 = [ones(m,1), X];
+
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+
+z3 = [ones(m,1), a2] * Theta2';
+a3 = sigmoid(z3);
+
+h = a3; #5000x10
+
+# Cost is the sum over all labels and over all examples
+J = (1/m)*sum(sum(-Y.*log(h)-(1-Y).*log(1-h)));
+
+
+# ----------- Regularized cost function -------------------------------
+
+# Discard bias units
+theta1 = Theta1(:, 2:size(Theta1,2)); #25x401 => 25x400
+theta2 = Theta2(:, 2:size(Theta2,2)); #10x26 => 10x25 
+
+# Add (lambda/2*m)*(summed squares of all non-bias theta) to cost 
+J += (lambda/(2*m))*(sum(sum(theta1.^2)) + sum(sum(theta2.^2)));
 
 
 
+#/////////////// Part 2 - Backpropagation //////////////////////////
+D2 = 0;
+D1 = 0;
+
+for i = 1:m,
+  # Forward propagate to find activations and hypothesis
+  a1 = [1, X(i,:)]; #(1x401)
+  z2 = a1 * Theta1'; # (1x401) x (401x25) = (1x25)
+  a2 = [1, sigmoid(z2)];
+  z3 = a2 * Theta2'; # (1x26) x (26x10) = (1x10)
+  a3 = sigmoid(z3); # (1x10)
+  
+  # Compute the error for each node j in layer l and backpropagate it
+  d3 = a3 - Y(i,:); # (1x10)
+  d2 = d3 * theta2 .* sigmoidGradient(z2); # (1x10) x (10x25) = (1x25)
+
+  # Accumulate gradients
+  D2 += (d3' * a2); #(10x1) x (1x26) = (10x26)
+  D1 += (d2' * a1); #(25x1) x (1x401) = (25x401)
+  
+end;
+
+# 1/m times the accumulated gradients
+Theta2_grad = (1/m)*D2; #(10x25)
+Theta1_grad = (1/m)*D1; #(25x401)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-% -------------------------------------------------------------
+% -------------------- Regularize the gradients ---------------------------
+Theta2_grad(:, 2:end) += ((lambda/m) * theta2);
+Theta1_grad(:, 2:end) += ((lambda/m) * theta1);
 
 % =========================================================================
 
