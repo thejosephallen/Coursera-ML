@@ -41,10 +41,15 @@ error_val = zeros(length(lambda_vec), 1);
 
 
 
+for i = 1:length(lambda_vec),
+  # Train a model with a certain lambda
+  lambda = lambda_vec(i);
+  theta = trainLinearReg(X,y,lambda);
 
-
-
-
+  # Calculate this lambda's model's error on train and c.v. data
+  error_train(i) = linearRegCostFunction(X,y,theta,0)(1);
+  error_val(i) =  linearRegCostFunction(Xval,yval,theta,0)(1);
+end;
 
 
 

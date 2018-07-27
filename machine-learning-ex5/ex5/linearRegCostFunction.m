@@ -22,11 +22,11 @@ grad = zeros(size(theta));
 
 
 
+h = X * theta; # (12x2) x (2x1) = (12x1)
+J = (1/(2*m))*sumsq(h - y) + (lambda/(2*m))*sumsq(theta(2:end));
 
-
-
-
-
+grad(1) = (1/m)*(X'(1,:))*(h-y);
+grad(2:end) = (1/m)*((X(:,2:end))'*(h-y) + lambda*theta(2:end));
 
 
 
