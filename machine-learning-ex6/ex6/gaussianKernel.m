@@ -14,11 +14,10 @@ sim = 0;
 %               and x2 computed using a Gaussian kernel with bandwidth
 %               sigma
 %
-%
+%;/
 
 
-
-
+sim = exp(-sumsq(x1-x2)/(2*sigma^2));
 
 
 % =============================================================
