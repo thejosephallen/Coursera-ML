@@ -26,15 +26,14 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+% Non-vectoried implementation
+nElems = zeros(K,1);
+for i = 1:m,
+  centroids(idx(i),:) +=  X(i,:);
+  nElems(idx(i)) += 1;
+end
+centroids = bsxfun(@times,centroids,(1./nElems));
 
 % =============================================================
-
-
 end
 

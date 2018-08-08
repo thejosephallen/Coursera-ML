@@ -4,12 +4,13 @@ function idx = findClosestCentroids(X, centroids)
 %   in idx for a dataset X where each row is a single example. idx = m x 1 
 %   vector of centroid assignments (i.e. each entry in range [1..K])
 %
+m = size(X,1);
 
 % Set K
 K = size(centroids, 1);
 
 % You need to return the following variables correctly.
-idx = zeros(size(X,1), 1);
+idx = zeros(m, 1);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Go over every example, find its closest centroid, and store
@@ -23,9 +24,18 @@ idx = zeros(size(X,1), 1);
 
 
 
-
-
-
+for i = 1:m,
+  minimum = inf;
+  for j = 1:K,
+    # find distance between current example x and centroid u
+    distance = sumsq(X(i,:) - centroids(j,:));
+    # update closest centroid if closer than previous closest
+    if (distance <= minimum),
+      minimum = distance;
+      idx(i) = j;
+    endif
+  end
+end
 
 % =============================================================
 

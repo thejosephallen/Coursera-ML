@@ -14,10 +14,9 @@ centroids = zeros(K, size(X, 2));
 %
 
 
-
-
-
-
+% Given code to randomly choose K centroids
+randidx = randperm(size(X,1));
+centroids = X(randidx(1:K),:);
 
 
 % =============================================================
