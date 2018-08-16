@@ -40,17 +40,17 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% Dimensions: X = (nm x 100); Theta = (nu x 100); Y & R = (nm x nu)
 
+% Collaborative Filtering Cost Function
+h = X * Theta'; % h = (nm x nu)
+Theta_reg = sum(sumsq(Theta));
+X_reg = sum(sumsq(X));
+J = 0.5 * sum(sumsq(R .* (h - Y))) + (lambda/2) * (Theta_reg + X_reg);
 
-
-
-
-
-
-
-
-
-
+% Collaborative Filtering Gradient
+X_grad = ((R .* h) - Y) * Theta + (lambda * X);
+Theta_grad = ((R .* h) - Y)' * X + (lambda * Theta);
 
 
 

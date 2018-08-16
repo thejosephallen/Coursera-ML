@@ -22,10 +22,13 @@ sigma2 = zeros(n, 1);
 %
 
 
+% Dimensions: X = (m x n); mu = (n x 1); sigma2 = (n x 1);
 
+% Get the means of each column/feature
+mu = (1/m) * sum(X);
 
-
-
+% Get the variance of each column/feature
+sigma2 = (1/m) * sumsq(X - mu);
 
 
 
