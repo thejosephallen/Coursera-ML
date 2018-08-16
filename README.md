@@ -1,5 +1,5 @@
-# Coursera-ML
-[here](https://www.coursera.org/learn/machine-learning/)
+### Coursera-ML
+This repository cointains the Matlab programming exercises I did in [this](https://www.coursera.org/learn/machine-learning/) online machine learning course offered by Coursera. See below for a brief description of each exercise.
 
 + __ex1__ - In this exercise, I implemented linear regression on a dataset.
 + __ex2__ - In this exercise, I implemented logistic regression and applied it to two
